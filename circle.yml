@@ -2,6 +2,7 @@ dependencies:
   pre:
     - echo y | android update sdk --no-ui --all --filter "build-tools-27.0.3"
     - echo y | android update sdk --no-ui --all --filter "android-27"
+    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
 
 test:
   override:
