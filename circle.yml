@@ -24,3 +24,4 @@ deployment:
       - echo "Bundling Release"
       - ./gradlew assembleRelease -PdisablePreDex -PCI=$CI -PstorePassword=$STORE_PASSWORD -PkeyAlias=$KEY_ALIAS -PkeyPassword=$KEY_PASSWORD:
           timeout: 600
+      - source scripts/deployHockeyApp.sh && uploadToHockeyApp
