@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+
+// Version can be set on CI using -Dversion-build=2 when calling gradle
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = Integer.parseInt(System.getProperty('version-build', '0'))
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -7,8 +14,8 @@ android {
         applicationId "org.ocandroid.circledemo"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}-${versionBuild}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

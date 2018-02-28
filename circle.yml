@@ -22,6 +22,6 @@ deployment:
       - /circle-1.0-.*/
     commands:
       - echo "Bundling Release"
-      - ./gradlew assembleRelease -PdisablePreDex -PCI=$CI -PstorePassword=$STORE_PASSWORD -PkeyAlias=$KEY_ALIAS -PkeyPassword=$KEY_PASSWORD:
+      - ./gradlew assembleRelease -PdisablePreDex -Dversion-build=${CIRCLE_BUILD_NUM} -PCI=$CI -PstorePassword=$STORE_PASSWORD -PkeyAlias=$KEY_ALIAS -PkeyPassword=$KEY_PASSWORD:
           timeout: 600
       - source scripts/deployHockeyApp.sh && uploadToHockeyApp
