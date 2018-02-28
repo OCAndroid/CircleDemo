@@ -11,10 +11,38 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            storeFile new File("hockeyapp.keystore")
+
+            if (project.hasProperty("CI") && project.property("CI")) {
+                storePassword project.property("storePassword")
+                keyAlias project.property("keyAlias")
+                keyPassword project.property("keyPassword")
+            } else {
+                def propFile = new File("keystore.properties")
+
+                if (propFile.canRead()) {
+                    def props = new Properties()
+                    props.load(new FileInputStream(propFile))
+
+                    storePassword props.getProperty("storePassword")
+                    keyAlias props.getProperty("keyAlias")
+                    keyPassword props.getProperty("keyPassword")
+                } else {
+                    println 'properties file not found'
+                    android.buildTypes.release.signingConfig = null
+                }
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
